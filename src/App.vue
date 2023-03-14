@@ -30,7 +30,7 @@ const title = ref('');
 
 const editing = ref(false);
 
-const editingIndex = ref(null);
+const editingId = ref(null);
 
 const remainingTodos = ref(0);
 
@@ -42,6 +42,7 @@ watchEffect(() => {
 const addTodo = (input) => {
   if (input !== '') {
     todos.value.push({
+      id: Date.now(), 
       title: input,
       done: false,
     });
@@ -49,17 +50,18 @@ const addTodo = (input) => {
 };
 
 const updateTodo = (title) => {
-  todos.value[editingIndex.value].title = title
+  todos.value.find(todo => todo.id === editingId.value).title = title
   editing.value = false
 }
 
-const editTodo = (index) => {
+const editTodo = (id) => {
   editing.value = true
-  title.value = todos.value[index].title
-  editingIndex.value = index
+  title.value = todos.value.find(todo => todo.id === id).title
+  editingId.value = id
 };
 
-const deleteTodo = (index) => {
+const deleteTodo = (id) => {
+  const index = todos.value.findIndex(todo => todo.id === id)
   todos.value.splice(index, 1)
 };
 
@@ -71,8 +73,8 @@ const clearDone = () => {
   todos.value = todos.value.filter((todo) => !todo.done);
 };
 
-const toggleDone = (index) => {
-  todos.value[index].done = !todos.value[index].done;
+const toggleDone = (id) => {
+  todos.value.find(todo => todo.id === id).done = !todos.value.find(todo => todo.id === id).done;
 };
 
 </script>

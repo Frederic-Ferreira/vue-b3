@@ -1,10 +1,10 @@
 <template>
   <div>
-    <div v-for="(todo, index) in todos" :key="index" class="todo">
-      <span :class="{'checked': todo.done}" @click="$emit('toggleDone', index)" />
+    <div v-for="(todo) in todos" :key="todo.id" class="todo">
+      <span :class="{'checked': todo.done}" @click="$emit('toggleDone', todo.id)" />
       <p :class="{'done': todo.done}">{{ todo.title }}</p>
-      <button @click="$emit('editTodo', index)">Modifier</button>
-      <button @click="$emit('deleteTodo', index)">Supprimer</button>
+      <button @click="$emit('editTodo', todo.id)">Modifier</button>
+      <button @click="$emit('deleteTodo', todo.id)">Supprimer</button>
     </div>
   </div>
 </template>
