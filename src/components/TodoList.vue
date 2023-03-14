@@ -22,6 +22,7 @@ defineProps({
   justify-content: center;
   align-items: center;
   gap: 2em;
+  margin: 20px 0;
 }
   span{
     width: 10px;

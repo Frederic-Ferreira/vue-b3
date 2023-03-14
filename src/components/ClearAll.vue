@@ -1,14 +1,15 @@
 <template>
-  <button @click="clearAll">Effacer tout</button>
+  <button id="clear-all" @click="$emit('clearAll')">Effacer tout</button>
 </template>
 
-<script>
-export default {
-  name: 'ClearAll',
-  methods: {
-    clearAll() {
-      this.$emit('clear-all')
-    }
-  }
-}
+<script setup>
+  defineEmits(['clearAll'])
 </script>
+
+<style>
+#clear-all{
+  margin-top: 20px;
+  background-color: red;
+  color: white;
+}
+</style>

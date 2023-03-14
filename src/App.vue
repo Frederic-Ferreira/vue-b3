@@ -1,11 +1,15 @@
 <template>
-  <div>
+  <div class="home">
     <h1>Ma Todo List</h1>
+    <div class="search-bar">
+      <label id="label-search" for="search">Rechercher un todo ...</label>
+      <input type="text" name="search" v-model="searchValue" />
+    </div>
     <TodoForm :mode="editing" @addTodo="addTodo" @updateTodo="updateTodo" :title="title" />
-    <TodoList :todos="todos" @editTodo="editTodo" @deleteTodo="deleteTodo" @toggleDone="toggleDone" />
-    <button @click="clearAll">Effacer tout</button>
-    <button @click="clearDone">Effacer les tâches accomplies</button>
-    <p>Vous avez {{ remainingTodos }} tâche(s) restantes!</p>
+    <TodoList :todos="displayedTodos" @editTodo="editTodo" @deleteTodo="deleteTodo" @toggleDone="toggleDone" />
+    <ClearAll @clearAll="clearAll" />
+    <ClearDone @clearDone="clearDone" />
+    <p id="remaining-todos">Vous avez {{ remainingTodos }} tâche(s) restantes!</p>
   </div>
 </template>
 
@@ -13,8 +17,14 @@
 import { ref, watchEffect } from 'vue';
 import TodoForm from './components/TodoForm.vue';
 import TodoList from './components/TodoList.vue';
+import ClearAll from './components/ClearAll.vue';
+import ClearDone from './components/ClearDone.vue'
+
+const searchValue = ref('');
 
 const todos = ref([]);
+
+const displayedTodos = ref([])
 
 const title = ref('');
 
@@ -25,7 +35,8 @@ const editingIndex = ref(null);
 const remainingTodos = ref(0);
 
 watchEffect(() => {
-  remainingTodos.value = todos.value.filter(todo => todo.done !== true).length
+  displayedTodos.value = todos.value.filter(todo => todo.title.includes(searchValue.value))
+  remainingTodos.value = displayedTodos.value.filter(todo => todo.done !== true).length
 })
 
 const addTodo = (input) => {
@@ -66,3 +77,19 @@ const toggleDone = (index) => {
 
 </script>
 
+<style>
+
+#remaining-todos{
+margin-top: 33px;
+}
+
+.search-bar{
+  margin-bottom: 33Px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid black;
+}
+
+#label-search{
+  margin-right: 10px;
+}
+</style>

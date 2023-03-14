@@ -44,7 +44,19 @@ const changeTodo = () => {
 </script>
 
 <style>
+.todo-form{
+  background-color: rgb(165, 165, 165);
+  border-radius: 5px;
+  padding: 10px 20px;
+}
+
+.todo-form input{
+  height: 33px;
+  border-radius: 2px;
+  border: none;
+  padding-left: 5px;
+}
 .todo-form button{
-  margin: 20px;
+  margin-left: 20px;
 }
 </style>
